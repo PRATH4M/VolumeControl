@@ -11,7 +11,13 @@
         <label for="filename">Save CSV as:</label>
         <input type="text" id="filename" name="filename" required>
         <br>
+        <label for="location">Save location:</label>
+        <input type="text" id="location" name="location" required>
+        <br>
+        <input type="hidden" name="folder1" value="{{ folder1 }}">
+        <input type="hidden" name="folder2" value="{{ folder2 }}">
         <button type="submit">Download CSV</button>
     </form>
 </body>
 </html>
+
