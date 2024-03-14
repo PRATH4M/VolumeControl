@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload File</title>
+</head>
+<body>
+    <h1>Upload File(s) or Folder</h1>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul class="flashes">
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+    <form method="post" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".jpg,.jpeg,.png" multiple>
+        <br><br>
+        <label for="save_option">Save As:</label>
+        <select name="save_option" id="save_option">
+            <option value="default">Default Location ({{ DOWNLOAD_FOLDER }})</option>
+            <option value="ask">Ask for Location</option>
+        </select>
+        <br><br>
+        <label for="save_path" id="save_path_label" style="display: none;">Save Path:</label>
+        <input type="text" id="save_path" name="save_path" style="display: none;">
+        <br><br>
+        <button type="submit">Upload</button>
+    </form>
+    <script>
+        document.getElementById('save_option').addEventListener('change', function() {
+            var savePathInput = document.getElementById('save_path');
+            var savePathLabel = document.getElementById('save_path_label');
+            if (this.value === 'ask') {
+                savePathInput.style.display = 'block';
+                savePathLabel.style.display = 'block';
+            } else {
+                savePathInput.style.display = 'none';
+                savePathLabel.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
