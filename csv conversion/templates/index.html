@@ -3,18 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upload Folders</title>
+    <title>Upload Folders and Images</title>
 </head>
 <body>
-    <h1>Upload Folders</h1>
+    <h1>Upload Folders and Images</h1>
     <form action="/upload" method="post" enctype="multipart/form-data">
-        <label for="folder1">Upload Folder 1:</label>
-        <input type="file" name="folder1" id="folder1" directory webkitdirectory mozdirectory>
+        <label for="folder1">Upload Folder or Images 1:</label>
+        <input type="file" name="folder1" id="folder1" multiple webkitdirectory mozdirectory>
         <br>
-        <label for="folder2">Upload Folder 2:</label>
-        <input type="file" name="folder2" id="folder2" directory webkitdirectory mozdirectory>
+        <label for="folder2">Upload Folder or Images 2:</label>
+        <input type="file" name="folder2" id="folder2" multiple webkitdirectory mozdirectory>
         <br>
         <button type="submit">Upload</button>
     </form>
 </body>
 </html>
+
