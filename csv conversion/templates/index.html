@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Folders</title>
+</head>
+<body>
+    <h1>Upload Folders</h1>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <label for="folder1">Upload Folder 1:</label>
+        <input type="file" name="folder1" id="folder1" directory webkitdirectory mozdirectory>
+        <br>
+        <label for="folder2">Upload Folder 2:</label>
+        <input type="file" name="folder2" id="folder2" directory webkitdirectory mozdirectory>
+        <br>
+        <button type="submit">Upload</button>
+    </form>
+</body>
+</html>
