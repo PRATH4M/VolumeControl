@@ -22,7 +22,7 @@ def detect_thumb(frame, model):
         
 
 def main():
-    model = tf.keras.models.load_model('D:\\Random\\VolumeControl-main\\VolumeControl\\model\\full_model.weights.h5')  # Change the path to upload you model config
+    model = tf.keras.models.load_model('D:\\Random\\VolumeControl-main\\VolumeControl\\model\\full_model.weights.h5')  # Change the path to upload your model config
 
     cap = cv2.VideoCapture(0)
     current_volume = 50  
