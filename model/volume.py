@@ -1,26 +1,17 @@
 import cv2
 import numpy as np
-from pycaw.pycaw import AudioUtilities, ISimpleAudioVolume
+import subprocess
 import tensorflow as tf
-
-
-def get_volume_range():
-    return 0.0, 1.0
-
-# Function to set system volume
-def set_system_volume(volume):
-    sessions = AudioUtilities.GetAllSessions()
-    for session in sessions:
-        volume_object = session._ctl.QueryInterface(ISimpleAudioVolume)
-        volume_object.SetMasterVolume(volume, None)
+import keyboard
+import time
 
 
 def preprocess_image(image):
-    resized_image = cv2.resize(image, (224, 224))  
-    normalized_image = resized_image / 255.0  
-    return np.expand_dims(normalized_image, axis=0)  
+    resized_image = cv2.resize(image, (224, 224))
+    normalized_image = resized_image / 255.0
+    return np.expand_dims(normalized_image, axis=0)
 
-
+# Function to detect thumbs up or thumbs down
 def detect_thumb(frame, model):
     preprocessed_image = preprocess_image(frame)
     prediction = model.predict(preprocessed_image)
@@ -28,13 +19,16 @@ def detect_thumb(frame, model):
         return "Thumbs up"
     else:
         return "Thumbs down"
-
+        
 
 def main():
-    model = tf.keras.models.load_model('D:\\Random\\VolumeControl-main\\VolumeControl\\model\\full_model.weights.h5')  # Replace this with your model directory (the one used in main.py)
+    model = tf.keras.models.load_model('D:\\Random\\VolumeControl-main\\VolumeControl\\model\\full_model.weights.h5')  # Change the path to upload you model config
 
     cap = cv2.VideoCapture(0)
-    min_vol, max_vol = get_volume_range()
+    current_volume = 50  
+    thumb_detected = False  
+    cooldown_time = 2 
+    last_thumb_time = time.time()  
 
     while True:
         ret, frame = cap.read()
@@ -44,12 +38,16 @@ def main():
         gesture = detect_thumb(frame, model)
         print("Detected Gesture:", gesture)
 
-        if gesture == "Thumbs up":
-            volume = max_vol
-        else:
-            volume = min_vol
+        # Update thumb detected flag
+        thumb_detected = (gesture == "Thumbs up" or gesture == "Thumbs down")
 
-        set_system_volume(volume)
+        if time.time() - last_thumb_time >= cooldown_time:
+            if thumb_detected:
+                if gesture == "Thumbs up":
+                    keyboard.press_and_release('volume_up') 
+                elif gesture == "Thumbs down":
+                    keyboard.press_and_release('volume_down') 
+                last_thumb_time = time.time() 
 
         cv2.imshow('Volume Control', frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
